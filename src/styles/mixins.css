@@ -1,0 +1,9 @@
+.hidden {
+    display: none;
+  }
+
+  .header{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vh;
+  }
