@@ -1,15 +1,26 @@
 .characters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .character-card {
-    text-align: center;
-  }
-  
-  .character-card img {
-    width: 100%;
-    border-radius: 50%;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.character-card {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.character-card img {
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+.character-card p {
+  margin: 0.5rem 0;
+  color: #343a40;
+  font-size: 1rem;
+}

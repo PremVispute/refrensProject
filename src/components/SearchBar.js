@@ -32,7 +32,7 @@ export default function SearchBar({ setCharacterdata, setTotalPages, page }) {
 
   return (
     <>
-      <div className="header">
+      <div className={styles.header}>
         <input
           placeholder="Search by character"
           value={character}

@@ -1,4 +1,3 @@
-// src/components/SearchBarEpisodes.js
 import React from 'react'
 import styles from './SearchBarEpisodes.module.css'
 

@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <>
-      <h1 className="header">The Rick and Morty API</h1>
+      <h1 className={styles.header}>The Rick and Morty API</h1>
       <SearchBar 
         setCharacterdata={setCharacterData}
         setTotalPages={setTotalPages} 

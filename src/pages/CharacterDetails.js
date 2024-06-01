@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import styles from "./CharacterDetails.module.css"
 import { fetchProfileData, fetchLocationData, fetchOriginData, fetchEpisodeData } from "../utils/api"
 
-export default function ProfilePage() {
+export default function CharacterDetails() {
     const { id } = useParams()
     const [profileData, setProfileData] = useState({ location: {}, origin: {} })
     const [locationData, setLocationData] = useState(null)
