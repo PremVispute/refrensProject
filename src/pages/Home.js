@@ -1,12 +1,12 @@
 import React, {useState} from "react"
-import Characters from "../components/Characters"
+import Characters from "../pages/Characters"
 import SearchBar from "../components/SearchBar"
-import "./home.css"
+import styles from "./Home.module.css"
 
 export default function Home() {
-  const [characterData, setCharacterData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [characterData, setCharacterData] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
   return (
     <>
@@ -15,7 +15,6 @@ export default function Home() {
         setCharacterdata={setCharacterData}
         setTotalPages={setTotalPages} 
         page={page}
-        setPage={setPage}
       />
       <Characters
         characterdata={characterData}
@@ -24,5 +23,5 @@ export default function Home() {
         totalPages={totalPages}
       />
     </>
-  );
+  )
 }

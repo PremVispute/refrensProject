@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styles from "./characters.module.css";
+import React from "react"
+import { Link } from "react-router-dom"
+import styles from "./Characters.module.css"
 
 export default function Characters({ characterdata, page, setPage, totalPages }) {
   return (
@@ -48,5 +48,5 @@ export default function Characters({ characterdata, page, setPage, totalPages })
         </button>
       </div>
     </>
-  );
+  )
 }

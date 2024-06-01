@@ -1,0 +1,16 @@
+/* src/pages/Episodes.module.css */
+.episodes-container {
+    padding: 20px;
+  }
+  
+  .episodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .episode-card-link {
+    text-decoration: none;
+    color: inherit;
+  }

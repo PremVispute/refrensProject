@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from "react";
-import "./searchbar.css";
-import { getCharacterData, filterCharacterData } from "../utils/api";
+import React, { useState, useEffect } from "react"
+import styles from "./SearchBar.module.css"
+import { Link } from "react-router-dom"
+import { getCharacterData, filterCharacterData } from "../utils/api"
 
-export default function SearchBar({ setCharacterdata, setTotalPages, page, setPage }) {
-  const [originalData, setOriginalData] = useState([]);
-  const [character, setCharacter] = useState("");
-  const [status, setStatus] = useState("");
-  const [location, setLocation] = useState("");
-  const [episode, setEpisode] = useState("");
-  const [gender, setGender] = useState("");
-  const [species, setSpecies] = useState("");
-  const [type, setType] = useState("");
+export default function SearchBar({ setCharacterdata, setTotalPages, page }) {
+  const [originalData, setOriginalData] = useState([])
+  const [character, setCharacter] = useState("")
+  const [status, setStatus] = useState("")
+  const [location, setLocation] = useState("")
+  const [episode, setEpisode] = useState("")
+  const [gender, setGender] = useState("")
+  const [species, setSpecies] = useState("")
+  const [type, setType] = useState("")
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getCharacterData(page);
-      setOriginalData(data.results);
-      setCharacterdata(data.results);
-      setTotalPages(data.info.pages);
-    };
+      const data = await getCharacterData(page)
+      setOriginalData(data.results)
+      setCharacterdata(data.results)
+      setTotalPages(data.info.pages)
+    }
 
-    fetchData();
-  }, [page, setCharacterdata, setTotalPages]);
+    fetchData()
+  }, [page, setCharacterdata, setTotalPages])
 
   useEffect(() => {
-    const filters = { character, status, location, episode, gender, species, type };
-    const filteredData = filterCharacterData(originalData, filters);
-    setCharacterdata(filteredData);
-  }, [character, status, location, episode, gender, species, type, originalData, setCharacterdata]);
+    const filters = { character, status, location, episode, gender, species, type }
+    const filteredData = filterCharacterData(originalData, filters)
+    setCharacterdata(filteredData)
+  }, [character, status, location, episode, gender, species, type, originalData, setCharacterdata])
 
   return (
     <>
@@ -73,7 +74,17 @@ export default function SearchBar({ setCharacterdata, setTotalPages, page, setPa
             <option key={index} value={type}>{type || 'Unknown'}</option>
           ))}
         </select>
+        <button>
+          <Link to={"/locations"}>
+            Locations
+          </Link>
+        </button>
+        <button>
+          <Link to={"/episodes"}>
+            Episodes
+          </Link>
+        </button>
       </div>
     </>
-  );
+  )
 }
