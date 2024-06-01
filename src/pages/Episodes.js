@@ -1,44 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { getEpisodesData } from '../utils/api'
-import EpisodeCard from '../components/EpisodeCard'
-import SearchBarEpisodes from '../components/SearchBarEpisodes'
-import Pagination from '../components/Pagination'
-import styles from './Episodes.module.css'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { filterEpisodesData } from '../utils/api';
+import EpisodeCard from '../components/EpisodeCard';
+import SearchBarEpisodes from '../components/SearchBarEpisodes';
+import Pagination from '../components/Pagination';
+import styles from './Episodes.module.css';
 
 export default function Episodes() {
-  const [episodes, setEpisodes] = useState([])
-  const [search, setSearch] = useState('')
-  const [filteredEpisodes, setFilteredEpisodes] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [nextPage, setNextPage] = useState(null)
-  const [prevPage, setPrevPage] = useState(null)
+  const [search, setSearch] = useState('');
+  const [filteredEpisodes, setFilteredEpisodes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [nextPage, setNextPage] = useState(null);
+  const [prevPage, setPrevPage] = useState(null);
 
   useEffect(() => {
     const fetchEpisodes = async (page = 1) => {
-      const data = await getEpisodesData(page)
-      setEpisodes(data.results)
-      setFilteredEpisodes(data.results)
-      setTotalPages(data.info.pages)
-      setNextPage(data.info.next)
-      setPrevPage(data.info.prev)
-    }
+      const data = await filterEpisodesData(page, search);
+      setFilteredEpisodes(data.results);
+      setTotalPages(data.info.pages);
+      setNextPage(data.info.next);
+      setPrevPage(data.info.prev);
+    };
 
-    fetchEpisodes(currentPage)
-  }, [currentPage])
-
-  useEffect(() => {
-    setFilteredEpisodes(
-      episodes.filter((episode) =>
-        episode.name.toLowerCase().includes(search.toLowerCase())
-      )
-    )
-  }, [search, episodes])
+    fetchEpisodes(currentPage);
+  }, [currentPage, search]);
 
   const handlePageChange = (page) => {
-    setCurrentPage(page)
-  }
+    setCurrentPage(page);
+  };
 
   return (
     <div className={styles['episodes-container']}>
@@ -68,5 +58,5 @@ export default function Episodes() {
         handlePageChange={handlePageChange}
       />
     </div>
-  )
+  );
 }

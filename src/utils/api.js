@@ -14,54 +14,31 @@ export const getCharacterData = async (page = 1) => {
   }
 }
 
-export const filterCharacterData = (originalData, filters) => {
-  const { character, status, location, episode, gender, species, type } = filters
+export const filterCharacterData = async (page = 1, filters) => {
+  const { character, status, location, episode, gender, species, type } = filters;
 
-  let filteredData = originalData
+  const queryParams = new URLSearchParams();
+  if (character) queryParams.append("name", character);
+  if (status) queryParams.append("status", status);
+  if (location) queryParams.append("location", location);
+  if (episode) queryParams.append("episode", episode);
+  if (gender) queryParams.append("gender", gender);
+  if (species) queryParams.append("species", species);
+  if (type) queryParams.append("type", type);
 
-  if (character) {
-    filteredData = filteredData.filter((characterdata) =>
-      characterdata.name.toLowerCase().includes(character.toLowerCase())
-    )
+  const queryString = queryParams.toString();
+
+  try {
+    const response = await fetch(`${baseUrl}/?page=${page}${queryString ? `&${queryString}` : ''}`);
+    if (!response.ok) {
+      throw new Error(`Error fetching data: ${response.statusText}`);
+    }
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.error("Failed to fetch filtered character data:", error);
+    return { results: [], info: { count: 0, pages: 0, next: null, prev: null } };
   }
-
-  if (status) {
-    filteredData = filteredData.filter(
-      (characterdata) => characterdata.status === status
-    )
-  }
-
-  if (location) {
-    filteredData = filteredData.filter(
-      (characterdata) => characterdata.location.name === location
-    )
-  }
-
-  if (episode) {
-    filteredData = filteredData.filter((characterdata) =>
-      characterdata.episode.includes(episode)
-    )
-  }
-
-  if (gender) {
-    filteredData = filteredData.filter((characterdata) =>
-      characterdata.gender.includes(gender)
-    )
-  }
-
-  if (species) {
-    filteredData = filteredData.filter((characterdata) =>
-      characterdata.species.includes(species)
-    )
-  }
-
-  if (type) {
-    filteredData = filteredData.filter((characterdata) =>
-      characterdata.type.includes(type)
-    )
-  }
-
-  return filteredData
 }
 
 export async function fetchProfileData(id) {
@@ -125,19 +102,22 @@ export async function fetchEpisodeData(episodeUrls) {
 
 const locationsUrl = "https://rickandmortyapi.com/api/location"
 
-export const getLocationsData = async (page = 1) => {
+export const filterLocationsData = async (page = 1, searchQuery = '') => {
+  const queryParams = new URLSearchParams();
+  if (searchQuery) queryParams.append("name", searchQuery);
+
   try {
-    const response = await fetch(`${locationsUrl}?page=${page}`)
+    const response = await fetch(`${locationsUrl}?page=${page}${queryParams.toString() ? `&${queryParams.toString()}` : ''}`);
     if (!response.ok) {
-      throw new Error(`Error fetching locations: ${response.statusText}`)
+      throw new Error(`Error fetching locations data: ${response.statusText}`);
     }
-    const jsonData = await response.json()
-    return jsonData // Return the full response to get pagination info
+    const jsonData = await response.json();
+    return jsonData;
   } catch (error) {
-    console.error("Failed to fetch locations data:", error)
-    return { results: [], info: { count: 0, pages: 0, next: null, prev: null } }
+    console.error("Failed to fetch filtered locations data:", error);
+    return { results: [], info: { count: 0, pages: 0, next: null, prev: null } };
   }
-}
+};
 
 
 export async function getCharactersByLocation(urls) {
@@ -158,22 +138,24 @@ export async function getCharactersByLocation(urls) {
   }
 }
 
-// src/utils/api.js
 const episodesUrl = "https://rickandmortyapi.com/api/episode"
 
-export const getEpisodesData = async (page = 1) => {
+export const filterEpisodesData = async (page = 1, searchQuery = '') => {
+  const queryParams = new URLSearchParams();
+  if (searchQuery) queryParams.append("name", searchQuery);
+
   try {
-    const response = await fetch(`${episodesUrl}?page=${page}`)
+    const response = await fetch(`${episodesUrl}?page=${page}${queryParams.toString() ? `&${queryParams.toString()}` : ''}`);
     if (!response.ok) {
-      throw new Error(`Error fetching episodes: ${response.statusText}`)
+      throw new Error(`Error fetching episodes data: ${response.statusText}`);
     }
-    const jsonData = await response.json()
-    return jsonData
+    const jsonData = await response.json();
+    return jsonData;
   } catch (error) {
-    console.error("Failed to fetch episodes data:", error)
-    return []
+    console.error("Failed to fetch filtered episodes data:", error);
+    return { results: [], info: { count: 0, pages: 0, next: null, prev: null } };
   }
-}
+};
 
 export const fetchEpisodeDataList = async (id) => {
   try {
