@@ -1,11 +1,19 @@
-.header{
+.header {
     margin: 0px;
     color: rgb(32, 35, 41);
     border: none;
     font-weight: 900;
     z-index: 1;
-    font-size: 5.625rem;
+    font-size: 3rem; /* Adjust font size for mobile */
     display: flex;
     justify-content: center;
     margin-bottom: 2vh;
-}
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      font-size: 2.5rem; /* Adjust font size for smaller screens */
+      margin-bottom: 1vh; /* Adjust margin for smaller screens */
+    }
+  }
+  

@@ -15,13 +15,11 @@ export const getCharacterData = async (page = 1) => {
 }
 
 export const filterCharacterData = async (page = 1, filters) => {
-  const { character, status, location, episode, gender, species, type } = filters;
+  const { character, status, gender, species, type } = filters;
 
   const queryParams = new URLSearchParams();
   if (character) queryParams.append("name", character);
   if (status) queryParams.append("status", status);
-  if (location) queryParams.append("location", location);
-  if (episode) queryParams.append("episode", episode);
   if (gender) queryParams.append("gender", gender);
   if (species) queryParams.append("species", species);
   if (type) queryParams.append("type", type);
