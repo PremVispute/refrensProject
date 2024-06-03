@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
-import { fetchEpisodeDataList, getCharactersByEpisode } from "../utils/api"
+import { fetchEpisodeDataList, getCharactersByEpisode } from "../../utils/api"
 import styles from "./EpisodeDetails.module.css"
-import CharacterList from "../components/CharacterList"
+import CharacterList from "../../components/CharacterList/CharacterList"
+import Loader from "../../components/Loader/Loader"
 
 export default function EpisodeDetails() {
   const { id } = useParams()
   const [episode, setEpisode] = useState(null)
   const [characters, setCharacters] = useState([])
+  const [isLoadingEpisodes, setIsLoadingEpisodes] = useState(true);
 
+  // Fetch episode and character data when component mounts or ID changes
   useEffect(() => {
     const fetchData = async () => {
       const episodeData = await fetchEpisodeDataList(id)
@@ -16,13 +19,14 @@ export default function EpisodeDetails() {
 
       const characterData = await getCharactersByEpisode(episodeData.characters)
       setCharacters(characterData)
+      setIsLoadingEpisodes(false);
     }
 
     fetchData()
   }, [id])
 
-  if (!episode) {
-    return <div>Loading...</div>
+  if (isLoadingEpisodes) {
+    return <Loader />
   }
 
   return (

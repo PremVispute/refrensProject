@@ -10,8 +10,8 @@ export default function Characters({ characterdata, page, setPage, totalPages })
           <div className={styles.card} key={characterdataItem.id}>
             <img className={styles.img} src={characterdataItem.image} alt="Avatar" />
             <div className={styles['card-text']}>
-              <div className=''>
-                <Link to={`/character/${characterdataItem.id}`}>
+              <div className={styles['card-inner-space']}>
+                <Link to={`/character/${characterdataItem.id}`} className={styles['card-inner-text']}>
                   {characterdataItem.name}
                 </Link>
               </div>
@@ -23,7 +23,7 @@ export default function Characters({ characterdata, page, setPage, totalPages })
                 {characterdataItem.location.name}
               </div>
               <div className={styles['card-inner-space']}>
-                First seen in:
+                First seen at:
               </div>
               <div className={styles['card-inner-text']}>
                 {characterdataItem.origin.name}

@@ -1,42 +1,44 @@
-import React, { useState, useEffect, useCallback } from "react";
-import styles from "./SearchBar.module.css";
-import { Link } from "react-router-dom";
-import { getCharacterData, filterCharacterData } from "../utils/api";
-import debounce from "lodash/debounce";
+import React, { useState, useEffect, useCallback } from "react"
+import styles from "./SearchBar.module.css"
+import { Link } from "react-router-dom"
+import { getCharacterData, filterCharacterData } from "../../utils/api"
+import debounce from "lodash/debounce"
 
 export default function SearchBar({ setCharacterdata, setTotalPages, page }) {
-  const [originalData, setOriginalData] = useState([]);
-  const [character, setCharacter] = useState("");
-  const [status, setStatus] = useState("");
-  const [gender, setGender] = useState("");
-  const [species, setSpecies] = useState("");
-  const [type, setType] = useState("");
+  const [originalData, setOriginalData] = useState([])
+  const [character, setCharacter] = useState("")
+  const [status, setStatus] = useState("")
+  const [gender, setGender] = useState("")
+  const [species, setSpecies] = useState("")
+  const [type, setType] = useState("")
 
+  // Fetch initial character data when the component mounts or page changes
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getCharacterData(page);
-      setOriginalData(data.results);
-      setCharacterdata(data.results);
-      setTotalPages(data.info.pages);
-    };
+      const data = await getCharacterData(page)
+      setOriginalData(data.results)
+      setCharacterdata(data.results)
+      setTotalPages(data.info.pages)
+    }
 
-    fetchData();
-  }, [page, setCharacterdata, setTotalPages]);
+    fetchData()
+  }, [page, setCharacterdata, setTotalPages])
 
-  // Create a debounced version of fetchFilteredData
+  // Debounced function to fetch filtered character data
   const debouncedFetchFilteredData = useCallback(
     debounce(async (filters, page) => {
-      const filteredData = await filterCharacterData(page, filters);
-      setCharacterdata(filteredData.results || []);
-      setTotalPages(filteredData.info.pages || 0);
+      const filteredData = await filterCharacterData(page, filters)
+      setCharacterdata(filteredData.results || [])
+      setTotalPages(filteredData.info.pages || 0)
     }, 300),
     []
-  );
+  )
 
+  // Update filtered data whenever filter inputs or page change
   useEffect(() => {
-    const filters = { character, status, gender, species, type };
-    debouncedFetchFilteredData(filters, page);
-  }, [character, status, gender, species, type, page, debouncedFetchFilteredData]);
+    const filters = { character, status, gender, species, type }
+    debouncedFetchFilteredData(filters, page)
+  }, [character, status, gender, species, type, page, debouncedFetchFilteredData])
 
   return (
     <div className={styles.header}>
@@ -76,5 +78,5 @@ export default function SearchBar({ setCharacterdata, setTotalPages, page }) {
         <Link to={"/episodes"}>Episodes</Link>
       </button>
     </div>
-  );
+  )
 }

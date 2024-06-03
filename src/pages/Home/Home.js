@@ -1,6 +1,6 @@
 import React, {useState} from "react"
-import Characters from "../pages/Characters"
-import SearchBar from "../components/SearchBar"
+import Characters from "../Characters/Characters"
+import SearchBar from "../../components/SearchBar/SearchBar"
 import styles from "./Home.module.css"
 
 export default function Home() {

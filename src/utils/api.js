@@ -1,4 +1,6 @@
 const baseUrl = "https://rickandmortyapi.com/api/character"
+const locationsUrl = "https://rickandmortyapi.com/api/location"
+const episodesUrl = "https://rickandmortyapi.com/api/episode"
 
 export const getCharacterData = async (page = 1) => {
   try {
@@ -82,23 +84,17 @@ export async function fetchOriginData(url) {
 
 export async function fetchEpisodeData(episodeUrls) {
   try {
-    const episodes = await Promise.all(
-      episodeUrls.map(async (episodeUrl) => {
-        const response = await fetch(episodeUrl)
-        if (!response.ok) {
-          throw new Error(`Error fetching episode data: ${response.statusText}`)
-        }
-        return response.json()
-      })
-    )
-    return episodes
+    const episodeIds = episodeUrls.map(url => url.split('/').pop()).join(',');
+    const response = await fetch(`https://rickandmortyapi.com/api/episode/${episodeIds}`);
+    if (!response.ok) {
+      throw new Error(`Error fetching episode data: ${response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error("Failed to fetch episode data:", error)
-    return []
+    console.error("Failed to fetch episode data:", error);
+    return [];
   }
 }
-
-const locationsUrl = "https://rickandmortyapi.com/api/location"
 
 export const filterLocationsData = async (page = 1, searchQuery = '') => {
   const queryParams = new URLSearchParams();
@@ -135,8 +131,6 @@ export async function getCharactersByLocation(urls) {
     return []
   }
 }
-
-const episodesUrl = "https://rickandmortyapi.com/api/episode"
 
 export const filterEpisodesData = async (page = 1, searchQuery = '') => {
   const queryParams = new URLSearchParams();

@@ -1,10 +1,10 @@
 import React from "react"
-import Home from "./pages/Home"
-import CharacterDetails from "./pages/CharacterDetails"
-import Locations from "./pages/Locations"
-import LocationDetails from "./pages/LocationDetails"
-import Episodes from "./pages/Episodes"
-import EpisodeDetails from "./pages/EpisodeDetails"
+import Home from "./pages/Home/Home"
+import CharacterDetails from "./pages/CharacterDetails/CharacterDetails"
+import Locations from "./pages/Locations/Locations"
+import LocationDetails from "./pages/LocationDetails/LocationDetails"
+import Episodes from "./pages/Episodes/Episodes"
+import EpisodeDetails from "./pages/EpisodeDetails/EpisodeDetails"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import './styles/globals.css'
 import './styles/variables.css'
